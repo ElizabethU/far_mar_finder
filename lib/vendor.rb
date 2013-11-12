@@ -14,7 +14,7 @@ class Vendor
     end
   end
 
-def self.find(id)
+  def self.find(id)
     all.find do |vendor|
       vendor.id.to_i == id
     end
@@ -38,15 +38,15 @@ def self.find(id)
     end
   end
 
-  def products
-    Products.
-  end
+  # def products
+  #   Products
+  # end
 
-  def sale #returns Sale instances associated with market by vendor_id
-  end
+  # def sale #returns Sale instances associated with market by vendor_id
+  # end
 
-  def revenue #returns sum of all vendor's sales
-  end
+  # def revenue #returns sum of all vendor's sales
+  # end
 
 end
 

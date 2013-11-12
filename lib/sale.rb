@@ -30,6 +30,4 @@ class Sale
   # def self.find_all_by_amount(amount)
   #   all.select do ||
   #     market.city == city_name
-    end
-  end
 end
