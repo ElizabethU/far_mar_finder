@@ -39,7 +39,7 @@ class Vendor
   end
 
   def market
-    Market.all.select do |market|
+    Market.all.find do |market|
       market.id == market_id
     end
   end
@@ -56,7 +56,6 @@ class Vendor
     end
   end
 
-#Does
   def revenue
     sum = 0
     sales.each do |sale|
@@ -65,12 +64,9 @@ class Vendor
     return sum
   end
 
-  # def sale #returns Sale instances associated with market by vendor_id
-  # end
-
-  # def revenue #returns sum of all vendor's sales
-  # end
-
 end
 
+#products by vendor
+#compare revenues
+#analyze sales (Like avg price?)
 
