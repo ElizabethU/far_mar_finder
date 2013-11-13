@@ -35,12 +35,35 @@ class Market
     end
   end
 
+  def self.find_by_name(name)
+    all.select do |market_instance|
+      market_instance.name =~ /#{name}/i 
+    end
+  end
+
   def vendors
     Vendor.all.select do |vendor|
       vendor.market_id == id
     end
   end
 
+  def self.random #optimize later in far_mar
+    all.sample
+  end
+
+  def products
+    prod_array = Vendor.by_market(id).map do |vendor| 
+      vendor.products
+    end
+    prod_array.flatten
+  end
+
+  def self.search(search_term) #returns collection Market
+    find_by_name(search_term) + Vendor.find_by_name(search_term) 
+  end
+
+  def preferred_vendor
+    Vendor.all.find 
 end
 
 # Market.find(2).vendors

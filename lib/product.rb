@@ -61,5 +61,9 @@ class Product
     return count
   end
 
+  def self.random
+    all.sample
+  end
+
 end
 

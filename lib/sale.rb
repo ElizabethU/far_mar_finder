@@ -45,6 +45,10 @@ class Sale
     end
   end
 
+  def self.random
+    all.sample
+  end
+
   # def self.find_all_by_amount(amount)
   #   all.select do ||
   #     market.city == city_name

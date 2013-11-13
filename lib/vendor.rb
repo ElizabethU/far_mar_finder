@@ -9,8 +9,8 @@ class Vendor
   end
 
   def self.all
-    CSV.read("./support/vendors.csv").map do |array|
-      Vendor.new(array)
+    CSV.read("./support/vendors.csv").map do |vendor_array|
+      Vendor.new(vendor_array)
     end
   end
 
@@ -38,10 +38,15 @@ class Vendor
     end
   end
 
+  # def market
+  #   Market.all.find do |market|
+  #     market.id == market_id
+  #   end
+  # end
+
+#ERASE LATER
   def market
-    Market.all.find do |market|
-      market.id == market_id
-    end
+    Market.find(market_id)
   end
 
   def products
@@ -62,6 +67,10 @@ class Vendor
       sum += sale.amount
     end
     return sum
+  end
+
+  def self.random
+    all.sample
   end
 
 end
