@@ -1,8 +1,8 @@
 class Market
-  attr_reader :market_id, :name, :address, :city, :county, :state, :zip
+  attr_reader :id, :name, :address, :city, :county, :state, :zip
 
   def initialize(market_array)
-    @market_id = market_array[0]
+    @id = market_array[0].to_i
     @name = market_array[1]
     @address = market_array[2]
     @city = market_array[3]
@@ -17,9 +17,9 @@ class Market
     end
   end
 
-  def self.find(id)
+  def self.find(market_id)
     all.find do |market|
-      market.market_id.to_i == id
+      market.id == market_id
     end
   end
 
@@ -37,11 +37,11 @@ class Market
 
   def vendors
     Vendor.all.select do |vendor|
-      vendor.market_id == market_id
+      vendor.market_id == id
     end
   end
 
 end
 
-Market.find(2).vendors
+# Market.find(2).vendors
 # puts Market.find(2).inspect
