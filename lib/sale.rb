@@ -10,7 +10,7 @@ class Sale
   end
 
   def self.all
-    CSV.read("./support/sales.csv").map do |array|
+    @all_sale ||= CSV.read("./support/sales.csv").map do |array|
       Sale.new(array)
     end
   end

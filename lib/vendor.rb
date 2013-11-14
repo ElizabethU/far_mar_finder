@@ -9,7 +9,7 @@ class Vendor
   end
 
   def self.all
-    CSV.read("./support/vendors.csv").map do |vendor_array|
+    @all_vendor ||= CSV.read("./support/vendors.csv").map do |vendor_array|
       Vendor.new(vendor_array)
     end
   end
@@ -50,9 +50,7 @@ class Vendor
   end
 
   def products
-    Product.all.select do |product|
-      product.vendor_id == id
-    end
+    Product.by_vendor(id)
   end
 
   def sales
@@ -73,6 +71,8 @@ class Vendor
     all.sample
   end
 
+  def self.most_revenue(n)
+    
 end
 
 #products by vendor

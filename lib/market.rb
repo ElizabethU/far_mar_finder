@@ -12,7 +12,7 @@ class Market
   end
 
   def self.all
-    CSV.read("./support/markets.csv").map do |market_array|
+    @all_market ||= CSV.read("./support/markets.csv").map do |market_array|
       Market.new(market_array)
     end
   end
@@ -62,9 +62,58 @@ class Market
     find_by_name(search_term) + Vendor.find_by_name(search_term) 
   end
 
-  def preferred_vendor
-    Vendor.all.find 
-end
+  def vendor_revenue_data
+    vendor_hash = {}
+    @vendor_revenue_list ||= vendors.select do |vendor_instance| 
+      vendor_hash[vendor_instance.revenue] = vendor_instance
+    end
+  end
+
+  # def preferred_vendor #we think we can do this more cleanly
+  #   highest_rev = 0
+  # #   vendor_hash = {}
+  #   vendors.select do |vendor_instance| 
+  #     vendor_hash[vendor_instance.revenue] = vendor_instance
+  #   end
+  #   vendor_hash.each do |revenue, vendor_instance| 
+  #     if revenue >= highest_rev
+  #       highest_rev = revenue
+  #     end
+  #   end
+  #   vendor_hash[highest_rev] 
+  # end
+    
+
+  def preferred_vendor #we think we can do this more cleanly
+    # vendor_revenue_data
+    highest_rev = 0
+    highest_rev_obj = nil
+    vendors.select do |vendor_instance| 
+      rev = vendor_instance.revenue 
+      if rev >= highest_rev
+        highest_rev = rev
+        highest_rev_obj = vendor_instance
+      end
+    end
+    highest_rev_obj
+  end
+
+  def preferred_vendor(date)
+
+  end
+
+  def worst_vendor
+    lowest_rev = 50000
+    lowest_rev_obj = nil
+    vendors.select do |vendor_instance|
+      rev = vendor_instance.revenue
+      if rev <= lowest_rev
+        lowest_rev = rev
+        lowest_rev_obj = vendor_instance
+      end
+    end
+      lowest_rev_obj
+  end
 
 # Market.find(2).vendors
 # puts Market.find(2).inspect
