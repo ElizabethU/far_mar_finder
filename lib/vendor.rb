@@ -72,7 +72,8 @@ class Vendor
   end
 
   def self.most_revenue(n)
-    
+  end
+
 end
 
 #products by vendor

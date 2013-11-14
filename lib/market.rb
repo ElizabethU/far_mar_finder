@@ -63,10 +63,11 @@ class Market
   end
 
   def vendor_revenue_data
-    vendor_hash = {}
-    @vendor_revenue_list ||= vendors.select do |vendor_instance| 
-      vendor_hash[vendor_instance.revenue] = vendor_instance
+    @vendor_revenue_list ||= @vendor_hash = {}
+    vendors.select do |vendor_instance| 
+      @vendor_hash[vendor_instance.revenue] = vendor_instance
     end
+    @vendor_hash
   end
 
   # def preferred_vendor #we think we can do this more cleanly
@@ -86,34 +87,38 @@ class Market
 
   def preferred_vendor #we think we can do this more cleanly
     # vendor_revenue_data
-    highest_rev = 0
-    highest_rev_obj = nil
-    vendors.select do |vendor_instance| 
-      rev = vendor_instance.revenue 
-      if rev >= highest_rev
-        highest_rev = rev
-        highest_rev_obj = vendor_instance
-      end
-    end
-    highest_rev_obj
+    r = vendor_revenue_data.keys.sort.last
+    @vendor_hash[r]
+    # highest_rev = 0
+    # highest_rev_obj = nil
+    # vendors.select do |vendor_instance| 
+    #   rev = vendor_instance.revenue 
+    #   if rev >= highest_rev
+    #     highest_rev = rev
+    #     highest_rev_obj = vendor_instance
+    #   end
+    # end
+    # highest_rev_obj
   end
 
-  def preferred_vendor(date)
-
+  def prefered_vendor(date) #This is for you, Bookis!
+    
   end
 
   def worst_vendor
-    lowest_rev = 50000
-    lowest_rev_obj = nil
-    vendors.select do |vendor_instance|
-      rev = vendor_instance.revenue
-      if rev <= lowest_rev
-        lowest_rev = rev
-        lowest_rev_obj = vendor_instance
-      end
-    end
-      lowest_rev_obj
+    r = vendor_revenue_data.keys.sort.first
+    @vendor_hash[r]
+    # lowest_rev = 50000
+    # lowest_rev_obj = nil
+    # vendors.select do |vendor_instance|
+    #   rev = vendor_instance.revenue
+    #   if rev <= lowest_rev
+    #     lowest_rev = rev
+    #     lowest_rev_obj = vendor_instance
+    #   end
+    # end
+    #   lowest_rev_obj
   end
-
+end
 # Market.find(2).vendors
 # puts Market.find(2).inspect
