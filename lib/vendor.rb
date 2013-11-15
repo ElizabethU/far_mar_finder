@@ -46,14 +46,10 @@ class Vendor
     return sum
   end
 
-#Should be a self method, for all vendors
-  def revenue_date(date)
+  def self.revenue_date(date)
     total_sales = 0
-    sales.select do |sale|
-      puts sale.purchase_time.strftime("%m/%d/%Y"), date
-      if sale.purchase_time.strftime("%m/%d/%Y") == date
-        total_sales += sale.amount
-      end
+    Sale.by_date(date).each do |sale|
+      total_sales += sale.amount
     end
     total_sales
   end
