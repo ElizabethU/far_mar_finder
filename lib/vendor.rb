@@ -38,28 +38,42 @@ class Vendor
     end
   end
 
-  def revenue
-    sum = 0
-    sales.each do |sale|
-      sum += sale.amount
-    end
-    return sum
-  end
+  # def revenue(date=nil)
+#   if date
+#     Sale.by_date_and_vendor_id(date, id)
+#   else
+#     Sale.revenue_by_vendor_id[self.id]
+#   end
+# end
 
-  def self.revenue_date(date)
+  # def revenue
+  #   sum = 0
+  #   sales.each do |sale|
+  #     sum += sale.amount
+  #   end
+  #   return sum
+  # end
+
+  def revenue(date=nil)
     total_sales = 0
-    Sale.by_date(date).each do |sale|
+    if date  
+      Sale.by_date(date).each do |sale|
       total_sales += sale.amount
+      end
+    else
+      sales.each do |sale|
+      total_sales += sale.amount
+      end
     end
     total_sales
   end
 
   def market
-    Market.find(market_id)
+    @all_markets ||= Market.find(market_id)
   end
 
   def products
-    Product.by_vendor(id)
+    @all_prods_by_vendor ||= Product.by_vendor(id)
   end
 
   def sales
@@ -71,9 +85,29 @@ class Vendor
   def self.random
     all.sample
   end
+  
+  def self.most_items(n)
+    vendor_product_total_hash = {}
+    all.each do |vendor| 
+      vendor_product_total_hash[vendor] = vendor.products.length
+    end
+      vendor_product_total_hash.sort_by {|vendor, product_total| product_total}.reverse.take(n)
+  end
+
+  def self.best_day #Find the date with the highest revenue
+    new_hash = {}
+    @day_hash = all.group_by {|sale_instance| sale_instance.purchase_time.to_date }
+    @day_hash.each do |date_object, sales_array|
+      total_sales = 0
+      all.select do |sale| #just sales for day
+        sale.purchase_time.to_date == date_object
+        total_sales += sale.amount
+      end
+      new_hash[date_object] = total_sales
+    end
+    new_hash.sort_by {|obj1, obj2| obj2 }.last
+  end
 end
 
-#products by vendor
-#compare revenues
-#analyze sales (Like avg price?)
+
 
