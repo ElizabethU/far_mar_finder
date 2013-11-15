@@ -71,11 +71,6 @@ class Vendor
   def self.random
     all.sample
   end
-
-  # def self.most_revenue(n)
-  #   preferred_vendor(nil, n = 1)
-  # end
-
 end
 
 #products by vendor

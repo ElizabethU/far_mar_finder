@@ -69,8 +69,4 @@ class Sale
     end
     new_hash.sort_by {|obj1, obj2| obj2 }.last
   end
-
-  # def self.find_all_by_amount(amount)
-  #   all.select do ||
-  #     market.city == city_name
 end

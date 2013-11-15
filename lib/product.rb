@@ -30,11 +30,7 @@ class Product
       product.name =~ /#{name_ven}/i
     end
   end
-  # def self.by_market(id)
-  #   all.select do |vendor|
-  #     vendor.market_id ==  id
-  #   end
-  # end
+
   def self.by_vendor(id_of_vendor)
     all.select do |product|
       product.vendor_id ==  id_of_vendor
