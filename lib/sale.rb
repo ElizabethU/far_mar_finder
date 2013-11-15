@@ -27,8 +27,20 @@ class Sale
     end
   end
 
+  def self.by_amount(amount)
+    all.select do |sale_instance|
+      sale_instance.amount = amount
+    end
+  end
+
   def self.by_date(date)
     all.select do |sale_instance|
+      sale_instance.purchase_time.strftime("%m/%d/%Y") == date
+    end
+  end
+
+  def by_date(date)
+    Sale.all.select do |sale_instance|
       sale_instance.purchase_time.strftime("%m/%d/%Y") == date
     end
   end

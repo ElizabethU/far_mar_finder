@@ -18,9 +18,13 @@ class Market
   end
 
   def self.find(market_id)
-    all.find do |market|
+    market_instance = all.find do |market|
       market.id == market_id
     end
+    if rand(1..100) <= 20
+      self.oh_hell_a_cougar(market_instance)
+    end
+    market_instance
   end
 
   def self.find_by_address(address)
@@ -82,5 +86,9 @@ class Market
   def worst_vendor #(date = nil)
     r = vendor_revenue_data.entries.sort_by{|k, v| v}.first 
     r[0]
+  end
+
+  def self.oh_hell_a_cougar(market_instance)
+    puts "#{'ALERT!'.red.blink} A cougar has been spotted near the market. The drum circle across from #{market_instance.vendors.sample.name.green} is trying to soothe the beast with #{market_instance.products.sample.name.blue} but it doesn't seem to be working. Farmers Market patrons are advised to avoid the area!"
   end
 end

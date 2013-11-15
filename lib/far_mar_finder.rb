@@ -1,5 +1,6 @@
 require 'csv'
 require 'time'
+require 'colorize'
 require_relative 'vendor'
 require_relative 'sale'
 require_relative 'market'

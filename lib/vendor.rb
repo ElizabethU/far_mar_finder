@@ -38,31 +38,26 @@ class Vendor
     end
   end
 
-  # def revenue(date=nil)
-#   if date
-#     Sale.by_date_and_vendor_id(date, id)
-#   else
-#     Sale.revenue_by_vendor_id[self.id]
-#   end
-# end
-
-  # def revenue
-  #   sum = 0
-  #   sales.each do |sale|
-  #     sum += sale.amount
-  #   end
-  #   return sum
-  # end
+  def self.revenue(date)
+    total_sales = 0
+    Sale.by_date(date).each do |sale|
+      total_sales += sale.amount
+    end
+    total_sales
+  end
 
   def revenue(date=nil)
     total_sales = 0
     if date  
-      Sale.by_date(date).each do |sale|
-      total_sales += sale.amount
+      #something else
+      sales.each do |sale_instance|
+        if sale_instance.purchase_time.strftime("%m/%d/%Y") == date
+          total_sales += sale_instance.amount
+        end
       end
     else
       sales.each do |sale|
-      total_sales += sale.amount
+        total_sales += sale.amount
       end
     end
     total_sales
