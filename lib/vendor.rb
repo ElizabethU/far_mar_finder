@@ -38,13 +38,26 @@ class Vendor
     end
   end
 
-  # def market
-  #   Market.all.find do |market|
-  #     market.id == market_id
-  #   end
-  # end
+  def revenue
+    sum = 0
+    sales.each do |sale|
+      sum += sale.amount
+    end
+    return sum
+  end
 
-#ERASE LATER
+#Should be a self method, for all vendors
+  def revenue_date(date)
+    total_sales = 0
+    sales.select do |sale|
+      puts sale.purchase_time.strftime("%m/%d/%Y"), date
+      if sale.purchase_time.strftime("%m/%d/%Y") == date
+        total_sales += sale.amount
+      end
+    end
+    total_sales
+  end
+
   def market
     Market.find(market_id)
   end
@@ -59,20 +72,13 @@ class Vendor
     end
   end
 
-  def revenue
-    sum = 0
-    sales.each do |sale|
-      sum += sale.amount
-    end
-    return sum
-  end
-
   def self.random
     all.sample
   end
 
-  def self.most_revenue(n)
-  end
+  # def self.most_revenue(n)
+  #   preferred_vendor(nil, n = 1)
+  # end
 
 end
 
