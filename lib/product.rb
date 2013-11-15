@@ -61,5 +61,21 @@ class Product
     all.sample
   end
 
+  def self.most_revenue(n)
+    array_of_product_objects = []
+    product_and_total_rev_hash = {}
+    Sale.all.each do |sale_instance|
+      if product_and_total_rev_hash[sale_instance.product_id]
+        product_and_total_rev_hash[sale_instance.product_id] += sale_instance.amount
+      else
+        product_and_total_rev_hash[sale_instance.product_id] = sale_instance.amount
+      end
+    end
+    top_products_array = product_and_total_rev_hash.sort_by {|product_id, revenue| revenue }.reverse.take(n)
+    top_products_array.each do |product_sub_array|
+      array_of_product_objects << Product.find(product_sub_array[0])
+    end
+    array_of_product_objects
+  end
 end
 

@@ -63,5 +63,9 @@ describe Market do
     it "finds the vendors" do
       market.vendors.first.id.should eq 1
     end
+
+    it "finds the products" do
+      market.products.last.name.should eq "Curved Pretzel" 
+    end
   end
 end
