@@ -1,3 +1,9 @@
+require 'simplecov'
+require 'json'
+SimpleCov.start do 
+  add_filter "/spec/"
+end
+
 require "far_mar_finder"
 require_relative "../lib/product.rb"
 require_relative "../lib/sale.rb"
