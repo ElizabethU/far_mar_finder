@@ -68,17 +68,17 @@ class Sale
   end
 
   def self.best_day
-#Find the date with the highest revenue
+    #Interpretted as the date with the highest revenue, not most sales objects
     new_hash = {}
     @day_hash = all.group_by {|sale_instance| sale_instance.purchase_time.to_date }
     @day_hash.each do |date_object, sales_array|
       total_sales = 0
-      all.select do |sale| #just sales for day
+      sales_array.select do |sale| #just sales for day
         sale.purchase_time.to_date == date_object
         total_sales += sale.amount
       end
       new_hash[date_object] = total_sales
     end
-    new_hash.sort_by {|obj1, obj2| obj2 }.last
+    new_hash.sort_by {|obj1, obj2| obj2 }.last[0]
   end
 end

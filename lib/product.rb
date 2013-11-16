@@ -77,5 +77,25 @@ class Product
     end
     array_of_product_objects
   end
+
+  def day_hash
+    @day_hash = sales.group_by {|sale_instance| sale_instance.purchase_time.to_date }
+  end
+
+  def best_day
+    #Interpretted as the date with the highest revenue, not most sales objects
+    new_hash = {}
+    @day_hash = sales.group_by {|sale_instance| sale_instance.purchase_time.to_date }
+    @day_hash.each do |date_object, sales_array|
+      total_sales = 0
+      sales_array.select do |sale| #just sales for day
+        sale.purchase_time.to_date == date_object
+        total_sales += sale.amount
+      end
+      new_hash[date_object] = total_sales
+    end
+    new_hash.sort_by {|obj1, obj2| obj2 }.last
+  end
 end
+
 
