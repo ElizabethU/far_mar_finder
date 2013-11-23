@@ -72,17 +72,14 @@ class Vendor
   end
 
   def sales
-    Sale.all.select do |sale|
-      sale.vendor_id == id
-    end
+    Sale.find_by_vendor_id(id)
   end
 
   def self.random
     all.sample
   end
   
-  def self.most_items(n)
-    #Vendor that offers the most items, not has the most sales
+  def self.most_items(n)    #Vendor that offers the most items, not has the most sales
     vendor_product_total_hash = {}
     all.each do |vendor| 
       vendor_product_total_hash[vendor] = vendor.products.length

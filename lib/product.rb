@@ -38,23 +38,18 @@ class Product
   end
 
   def vendor
-    Vendor.all.find do |vendor|
-      vendor.id == vendor_id
-    end
+    Vendor.find(vendor_id)
   end
 
   def sales
+    # Sale.product
     Sale.all.select do |sale|
       sale.product_id == id
     end
   end
 
   def number_of_sales
-    count = 0
-    sales.each do |sale|
-      count += 1
-    end
-    return count
+    sales.count
   end
 
   def self.random
@@ -85,8 +80,7 @@ class Product
   def best_day
     #Interpretted as the date with the highest revenue, not most sales objects
     new_hash = {}
-    @day_hash = sales.group_by {|sale_instance| sale_instance.purchase_time.to_date }
-    @day_hash.each do |date_object, sales_array|
+    day_hash.each do |date_object, sales_array|
       total_sales = 0
       sales_array.select do |sale| #just sales for day
         sale.purchase_time.to_date == date_object
@@ -97,5 +91,14 @@ class Product
     new_hash.sort_by {|obj1, obj2| obj2 }.last
   end
 end
+
+# def total_sales_by(product_id)
+
+
+
+
+
+
+
 
 

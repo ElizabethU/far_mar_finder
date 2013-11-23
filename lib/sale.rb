@@ -22,7 +22,7 @@ class Sale
   end
 
   def self.find_by_vendor_id(vendor_id_num)
-    all.find do |sale|
+    all.select do |sale|
       sale.vendor_id == vendor_id_num
     end
   end
@@ -46,15 +46,11 @@ class Sale
   end
 
   def vendor
-    Vendor.all.find do |vendor|
-      vendor.id == vendor_id
-    end
+    Vendor.find(id)
   end
 
   def product
-    Product.all.find do |product|
-      product.id == product_id
-    end
+    Product.find(id)
   end
 
   def self.between(beginning_time, end_time)
